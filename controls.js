@@ -1,4 +1,4 @@
-console.log("Initalizing local script");
+console.log("Initalizing controls script");
 
 document.addEventListener("DOMContentLoaded", function () {
   console.log("DOMContentLoaded");
