@@ -15,3 +15,8 @@ Add attributes for the following elements:
 | current time text element      	| mvr-audio-time    	| current-time 	|
 | skip button                     	| mvr-audio-time    	| skip       	|
 | rewind button                     | mvr-audio-time    	| rewind       	|
+
+## Setup Notes
+
+If using optional play and pause buttons, give them combo classes of 'hide'.
+'hide' Classes should set display to none.

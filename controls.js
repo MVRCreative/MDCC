@@ -6,7 +6,9 @@ document.addEventListener("DOMContentLoaded", function () {
   //variable declaration
   const audio = document.querySelector('[mvr-audio-element="audio"]');
   const seekBar = document.querySelector('input[mvr-audio-element="seek"]');
-  const playPauseToggle = document.querySelector('[mvr-audio-trigger="click"]');
+  const playPauseWrapper = document.querySelector(
+    '[mvr-audio-trigger="click"]',
+  );
   const playButton = document.querySelector(
     '[mvr-audio-trigger="play-button"]',
   );
@@ -21,17 +23,25 @@ document.addEventListener("DOMContentLoaded", function () {
   const timeRewind = document.querySelector('[mvr-audio-time="rewind"]');
 
   //play pause toggle
-  playPauseToggle.addEventListener("click", function () {
+  playPauseWrapper.addEventListener("click", function () {
     if (audio.paused) {
       audio.play();
-      playButton.classList.add("hide");
-      pauseButton.classList.remove("hide");
     } else {
       audio.pause();
+    }
+    playPauseToggle();
+  });
+
+  // play/pause toggle function
+  const playPauseToggle = function () {
+    if (playButton.classList.contains("hide") || audio.ended) {
       playButton.classList.remove("hide");
       pauseButton.classList.add("hide");
+    } else {
+      playButton.classList.add("hide");
+      pauseButton.classList.remove("hide");
     }
-  });
+  };
 
   //duration on page load
   audio.addEventListener("loadedmetadata", function () {
@@ -78,4 +88,6 @@ document.addEventListener("DOMContentLoaded", function () {
   seekBar.addEventListener("input", function () {
     audio.currentTime = seekBar.value;
   });
+
+  audio.addEventListener("ended", playPauseToggle);
 });
