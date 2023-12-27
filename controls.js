@@ -4,12 +4,19 @@ document.addEventListener("DOMContentLoaded", function () {
   console.log("DOMContentLoaded");
 
   //variable declaration
-    const audio = document.querySelector('[mvr-audio-element="audio"]')
-    const playPauseToggle = document.querySelector('[mvr-audio-trigger="click"]')
-    const playButton = document.querySelector('[mvr-audio-trigger="play-button"]')
-    const pauseButton = document.querySelector('[mvr-audio-trigger="pause-button"]')
-    const currentTimeDisplay = document.querySelector('[mvr-audio-time="current-time"]')
-    const durationDisplay = document.querySelector('[mvr-audio-time="duration"]')
+  const audio = document.querySelector('[mvr-audio-element="audio"]');
+  const playPauseToggle = document.querySelector('[mvr-audio-trigger="click"]');
+  const playButton = document.querySelector(
+    '[mvr-audio-trigger="play-button"]',
+  );
+  const pauseButton = document.querySelector(
+    '[mvr-audio-trigger="pause-button"]',
+  );
+  const currentTimeDisplay = document.querySelector(
+    '[mvr-audio-time="current-time"]',
+  );
+  const durationDisplay = document.querySelector('[mvr-audio-time="duration"]');
+  const seekBar = document.querySelector('input[mvr-audio-element="seek"]');
 
   //play pause toggle
   playPauseToggle.addEventListener("click", function () {
@@ -33,6 +40,9 @@ document.addEventListener("DOMContentLoaded", function () {
       ":" +
       (durationSeconds < 10 ? "0" : "") +
       durationSeconds;
+
+    console.log(audio.duration);
+    seekBar.max = Math.floor(audio.duration);
   });
 
   //time update
@@ -42,8 +52,8 @@ document.addEventListener("DOMContentLoaded", function () {
     currentTimeDisplay.textContent =
       minutes + ":" + (seconds < 10 ? "0" : "") + seconds;
 
-    var durationMinutes = Math.floor(audio.duration / 60);
-    var durationSeconds = Math.floor(audio.duration % 60);
+    var durationMinutes = Math.floor((audio.duration - audio.currentTime) / 60);
+    var durationSeconds = Math.floor((audio.duration - audio.currentTime) % 60);
     durationDisplay.textContent =
       durationMinutes +
       ":" +
@@ -51,6 +61,11 @@ document.addEventListener("DOMContentLoaded", function () {
       durationSeconds;
 
     // Update the seek bar position
-    // seekBar.value = audio.currentTime;
+    seekBar.value = audio.currentTime;
+  });
+
+  // Update the audio playback position when the seek bar is dragged
+  seekBar.addEventListener("input", function () {
+    audio.currentTime = seekBar.value;
   });
 });
