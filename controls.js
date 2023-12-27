@@ -5,6 +5,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   //variable declaration
   const audio = document.querySelector('[mvr-audio-element="audio"]');
+  const seekBar = document.querySelector('input[mvr-audio-element="seek"]');
   const playPauseToggle = document.querySelector('[mvr-audio-trigger="click"]');
   const playButton = document.querySelector(
     '[mvr-audio-trigger="play-button"]',
@@ -16,7 +17,8 @@ document.addEventListener("DOMContentLoaded", function () {
     '[mvr-audio-time="current-time"]',
   );
   const durationDisplay = document.querySelector('[mvr-audio-time="duration"]');
-  const seekBar = document.querySelector('input[mvr-audio-element="seek"]');
+  const timeSkip = document.querySelector('[mvr-audio-time="skip"]');
+  const timeRewind = document.querySelector('[mvr-audio-time="rewind"]');
 
   //play pause toggle
   playPauseToggle.addEventListener("click", function () {
@@ -41,7 +43,7 @@ document.addEventListener("DOMContentLoaded", function () {
       (durationSeconds < 10 ? "0" : "") +
       durationSeconds;
 
-    console.log(audio.duration);
+    seekBar.min = 0;
     seekBar.max = Math.floor(audio.duration);
   });
 
@@ -62,6 +64,14 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Update the seek bar position
     seekBar.value = audio.currentTime;
+  });
+
+  // Skip and Rewind
+  timeSkip.addEventListener("click", function () {
+    audio.currentTime += 10;
+  });
+  timeRewind.addEventListener("click", function () {
+    audio.currentTime -= 10;
   });
 
   // Update the audio playback position when the seek bar is dragged

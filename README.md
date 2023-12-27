@@ -13,4 +13,5 @@ Add attributes for the following elements:
 | pause button (optionally hide) 	| mvr-audio-trigger 	| pause-button 	|
 | duration text element          	| mvr-audio-time    	| duration     	|
 | current time text element      	| mvr-audio-time    	| current-time 	|
-
+| skip button                     	| mvr-audio-time    	| skip       	|
+| rewind button                     | mvr-audio-time    	| rewind       	|
