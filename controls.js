@@ -4,12 +4,12 @@ document.addEventListener("DOMContentLoaded", function () {
   console.log("DOMContentLoaded");
 
   //variable declaration
-  var audio = document.getElementById("audioTarget");
-  var playPauseToggle = document.querySelector(".play_toggle-wrapper");
-  var playButton = document.getElementById("playButton");
-  var pauseButton = document.getElementById("pauseButton");
-  var currentTimeDisplay = document.getElementById("currentTime");
-  var durationDisplay = document.getElementById("duration");
+    const audio = document.querySelector('[mvr-audio-element="audio"]')
+    const playPauseToggle = document.querySelector('[mvr-audio-trigger="click"]')
+    const playButton = document.querySelector('[mvr-audio-trigger="play-button"]')
+    const pauseButton = document.querySelector('[mvr-audio-trigger="pause-button"]')
+    const currentTimeDisplay = document.querySelector('[mvr-audio-time="current-time"]')
+    const durationDisplay = document.querySelector('[mvr-audio-time="duration"]')
 
   //play pause toggle
   playPauseToggle.addEventListener("click", function () {

@@ -2,14 +2,14 @@
 
 ## Quickstart
 
-Add id's for the following elements:
+Add attributes for the following elements:
 
-| \<element\>               | #id             |
-|---------------------------|-----------------|
-| audio                     | audioTarget     |
-| play button or wrapper    | playButton      |
-| pause button or wrapper   | pauseButton     |
-| current time text element | currentTime     |
-| duration text element     | durationDisplay |
+| \<element\>                    	| attr name         	| attr value   	|
+|--------------------------------	|-------------------	|--------------	|
+| audio                          	| mvr-audio-element 	| audio        	|
+| play/pause button              	| mvr-audio-trigger 	| click        	|
+| play button (optionally hide)  	| mvr-audio-trigger 	| play-button  	|
+| pause button (optionally hide) 	| mvr-audio-trigger 	| pause-button 	|
+| duration text element          	| mvr-audio-time    	| duration     	|
+| current time text element      	| mvr-audio-time    	| current-time 	|
 
-Make sure that the play and pause buttons are inside of an element with a class of '.play_toggle-wrapper'
