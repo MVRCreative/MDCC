@@ -5,7 +5,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
   //variable declaration
   const audio = document.querySelector('[mvr-audio-element="audio"]');
+  const audioList = document.querySelector('[mvr-audio-element="list"]');
   const seekBar = document.querySelector('input[mvr-audio-element="seek"]');
+
   const playPauseWrapper = document.querySelector(
     '[mvr-audio-trigger="click"]',
   );
@@ -15,6 +17,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const pauseButton = document.querySelector(
     '[mvr-audio-trigger="pause-button"]',
   );
+
   const currentTimeDisplay = document.querySelector(
     '[mvr-audio-time="current-time"]',
   );
@@ -34,46 +37,62 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // play/pause toggle function
   const playPauseToggle = function () {
-    if (playButton.classList.contains("hide") || audio.ended) {
-      playButton.classList.remove("hide");
-      pauseButton.classList.add("hide");
+    if (audio.src) {
+      if (audio.ended || audio.paused) {
+        // if (playButton.classList.contains("hide") || audio.ended || audio.paused) {
+        playButton.classList.remove("hide");
+        pauseButton.classList.add("hide");
+      } else {
+        playButton.classList.add("hide");
+        pauseButton.classList.remove("hide");
+      }
     } else {
-      playButton.classList.add("hide");
-      pauseButton.classList.remove("hide");
+      alert("Please select an audio to play.");
     }
   };
 
-  //duration on page load
+  //duration on metadata load
   audio.addEventListener("loadedmetadata", function () {
-    var durationMinutes = Math.floor(audio.duration / 60);
-    var durationSeconds = Math.floor(audio.duration % 60);
+    const durationMinutes = Math.floor(audio.duration / 60);
+    const durationSeconds = Math.floor(audio.duration % 60);
     durationDisplay.textContent =
       durationMinutes +
       ":" +
       (durationSeconds < 10 ? "0" : "") +
       durationSeconds;
 
+    currentTimeDisplay.textContent = "0:00";
+
+    seekBar.value = 0;
     seekBar.min = 0;
     seekBar.max = Math.floor(audio.duration);
+
+    playPauseToggle();
   });
 
   //time update
   audio.addEventListener("timeupdate", function () {
-    var minutes = Math.floor(audio.currentTime / 60);
-    var seconds = Math.floor(audio.currentTime % 60);
-    currentTimeDisplay.textContent =
-      minutes + ":" + (seconds < 10 ? "0" : "") + seconds;
+    if (!isNaN(audio.currentTime) && !isNaN(audio.duration)) {
+      const minutes = Math.floor(audio.currentTime / 60);
+      const seconds = Math.floor(audio.currentTime % 60);
+      currentTimeDisplay.textContent =
+        minutes + ":" + (seconds < 10 ? "0" : "") + seconds;
 
-    var durationMinutes = Math.floor((audio.duration - audio.currentTime) / 60);
-    var durationSeconds = Math.floor((audio.duration - audio.currentTime) % 60);
-    durationDisplay.textContent =
-      durationMinutes +
-      ":" +
-      (durationSeconds < 10 ? "0" : "") +
-      durationSeconds;
+      const durationMinutes = Math.floor(
+        (audio.duration - audio.currentTime) / 60,
+      );
+      const durationSeconds = Math.floor(
+        (audio.duration - audio.currentTime) % 60,
+      );
+      durationDisplay.textContent =
+        durationMinutes +
+        ":" +
+        (durationSeconds < 10 ? "0" : "") +
+        durationSeconds;
 
-    // Update the seek bar position
-    seekBar.value = audio.currentTime;
+      // Update the seek bar position
+      seekBar.value = audio.currentTime;
+    }
   });
 
   // Skip and Rewind
@@ -86,8 +105,27 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Update the audio playback position when the seek bar is dragged
   seekBar.addEventListener("input", function () {
-    audio.currentTime = seekBar.value;
+    if (audio.src) {
+      audio.currentTime = seekBar.value;
+    } else {
+      seekBar.value = 0;
+    }
   });
 
   audio.addEventListener("ended", playPauseToggle);
+
+  function changeAudioSource(newSource) {
+    audio.src = newSource;
+    audio.load();
+    // Reload the audio element to load the new source triggers metadata reload
+  }
+
+  audioList.addEventListener("click", function (event) {
+    let selectedSource = event.target
+      .closest(".audio_list-item")
+      .querySelector('[mvr-audio-element="source"]').textContent;
+    if (selectedSource !== "") {
+      changeAudioSource(selectedSource);
+    }
+  });
 });
