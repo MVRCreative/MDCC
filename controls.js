@@ -116,9 +116,12 @@ document.addEventListener("DOMContentLoaded", function () {
   audio.addEventListener("ended", playPauseToggle);
 
   function changeAudioSource(newSource) {
-    audio.src = newSource;
-    audio.load();
-    // Reload the audio element to load the new source triggers metadata reload
+    if (audio.src !== newSource) {
+      audio.src = newSource;
+      audio.load();
+      // Reload the audio element to load the new source triggers metadata reload
+      audio.play();
+    }
   }
 
   audioList.addEventListener("click", function (event) {
