@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const audio = document.querySelector('[mvr-audio-element="audio"]');
   const seekBar = document.querySelector('input[mvr-audio-element="seek"]');
 
-  const audioList = document.querySelector('[mvr-audio-list="list"]');
+  const audioList = document.querySelector('[mvr-audio-element="list"]');
 
   const playPauseWrapper = document.querySelector(
     '[mvr-audio-trigger="click"]',
