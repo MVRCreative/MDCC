@@ -26,6 +26,10 @@ document.addEventListener("DOMContentLoaded", function () {
   const timeSkip = document.querySelector('[mvr-audio-time="skip"]');
   const timeRewind = document.querySelector('[mvr-audio-time="rewind"]');
 
+  const barTitle = document.querySelector('[mvr-audio-meta="title"]');
+  const barSpeaker = document.querySelector('[mvr-audio-meta="speaker"]');
+  const barArt = document.querySelector('[mvr-audio-meta="art"]');
+
   //play pause toggle
   playPauseWrapper.addEventListener("click", function () {
     if (audio.paused) {
@@ -124,12 +128,23 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 
+  // Click in Audio List
   audioList.addEventListener("click", function (event) {
-    let selectedSource = event.target
-      .closest('[mvr-audio-list="item"]')
-      .querySelector('[mvr-audio-element="source"]').textContent;
+    let parent = event.target.closest('[w-el="media_item"]');
+
+    let selectedSource = parent.querySelector(
+      '[w-el="media_source"]',
+    ).textContent;
+    let title = parent.querySelector('[w-el="media_title"]');
+    let speaker = parent.querySelector('[w-el="media_speaker"]');
+    let thumbnail = parent.querySelector('[w-el="media_art"]');
+
     if (selectedSource !== "") {
       changeAudioSource(selectedSource);
+      // update metadata
+      barArt.src = thumbnail.textContent;
+      barTitle.textContent = title.textContent;
+      barSpeaker.textContent = speaker.textContent;
     }
   });
 });
