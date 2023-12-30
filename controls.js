@@ -1,5 +1,7 @@
 console.log("Initalizing controls script");
 
+// let audioId = "";
+
 document.addEventListener("DOMContentLoaded", function () {
   console.log("DOMContentLoaded");
 
@@ -139,12 +141,16 @@ document.addEventListener("DOMContentLoaded", function () {
     let speaker = parent.querySelector('[w-el="media_speaker"]');
     let thumbnail = parent.querySelector('[w-el="media_art"]');
 
+    // let id = parent.querySelector('[w-el="media_id"]');
+
     if (selectedSource !== "") {
       changeAudioSource(selectedSource);
       // update metadata
       barArt.src = thumbnail.textContent;
       barTitle.textContent = title.textContent;
       barSpeaker.textContent = speaker.textContent;
+
+      // audioId = id.textContent;
     }
   });
 });
