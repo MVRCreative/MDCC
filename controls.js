@@ -30,7 +30,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   const barTitle = document.querySelector('[mvr-audio-meta="title"]');
   const barSpeaker = document.querySelector('[mvr-audio-meta="speaker"]');
-  const barArt = document.querySelector('[mvr-audio-meta="art"]');
+  const barArt = document.querySelector('[mvr-audio-meta="artwork"]');
 
   //play pause toggle
   playPauseWrapper.addEventListener("click", function () {
