@@ -146,7 +146,9 @@ document.addEventListener("DOMContentLoaded", function () {
     if (selectedSource !== "") {
       changeAudioSource(selectedSource);
       // update metadata
-      barArt.src = thumbnail.textContent;
+      if (thumbnail.textContent !== null) {
+        barArt.src = thumbnail.textContent;
+      }
       barTitle.textContent = title.textContent;
       barSpeaker.textContent = speaker.textContent;
 
